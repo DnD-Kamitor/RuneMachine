@@ -11,49 +11,37 @@
     <main class="stage">
       <header class="header">
         <h1>Rune Machine</h1>
-        <p>Name the failed dawn in the order it unfolded.</p>
+        <p>A rune-operated emergency machine for the sealed vault door beneath the Dawnhall.</p>
       </header>
 
       <section class="machine-panel" aria-label="Rune-operated vault door machine">
-        <div class="door-scene">
-          <div class="door-frame">
-            <div class="vault-door" id="vaultDoor" aria-label="Sealed vault door">
-              <div class="door-half door-left"></div>
-              <div class="door-half door-right"></div>
-              <div class="door-bars">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="center-seal">
-                <div class="seal-ring"></div>
-                <div class="seal-core" id="sealCore">ᛟ</div>
-              </div>
-              <div class="door-inscription">Sealed against ambition</div>
-              <div class="door-open-text" id="doorOpenText">Failure named. Need witnessed. Fire bound. Dawn withheld.</div>
+        <div class="door-open-text" id="doorOpenText">
+          Failure named. Need witnessed. Fire bound. Dawn withheld.
+        </div>
+
+        <div class="rune-ring" id="runeRing" aria-label="Twenty-four Elder Futhark rune tokens">
+          <div class="bowl" aria-label="Rune bowl">
+            <div>
+              <div class="bowl-label">rune bowl</div>
+              <div class="bowl-content" id="bowlContent">empty</div>
             </div>
           </div>
-
-          <div class="seal-sockets" id="channels" aria-label="Accepted rune sockets"></div>
         </div>
 
-        <div class="keyboard-wrap">
-          <div class="keyboard-title">Rune keyboard</div>
-          <div class="rune-keyboard" id="runeKeyboard" aria-label="Twenty-four rune keys"></div>
-        </div>
+        <div class="channels" id="channels" aria-label="Accepted rune channels"></div>
       </section>
 
       <section class="status" id="status" aria-live="polite">
-        The sealed door waits. All twenty-four rune keys can be pressed.
+        The sealed door waits. All twenty-four rune-tokens can be cast into the bowl.
       </section>
     </main>
 
     <aside class="side-panel">
-      <section class="card">
+      <section class="card warning-card">
         <h2>Warning inscription</h2>
         <p><strong>This door was sealed against ambition.</strong></p>
         <p>Open it only against catastrophe.</p>
-        <p>If the Anchor wakes, name the failure in the order it unfolded.</p>
+        <p>If the Anchor wakes, feed the failure into the machine in the order it unfolded.</p>
         <p>Not to continue the work. To end it.</p>
       </section>
 
@@ -74,7 +62,7 @@
       </section>
 
       <section class="card footer-card">
-        <h2>GM keys</h2>
+        <h2>Keyboard</h2>
         <p>H: reveal hint<br>R: reset<br>F: fullscreen</p>
       </section>
     </aside>
