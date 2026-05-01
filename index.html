@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RuneMachine</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <main class="stage">
+      <header class="header">
+        <h1>Rune Machine</h1>
+        <p>Feed the failure into the bowl in the order it unfolded.</p>
+      </header>
+
+      <section class="machine-panel" aria-label="Rune-operated vault door machine">
+        <div class="door-open-text" id="doorOpenText">Failure named. Need witnessed. Fire bound. Dawn withheld.</div>
+
+        <div class="rune-ring" id="runeRing" aria-label="Ring of twenty-four rune tokens"></div>
+
+        <div class="bowl" aria-live="polite">
+          <div class="bowl-label">Stone bowl</div>
+          <div class="bowl-content" id="bowlContent">empty</div>
+        </div>
+
+        <div class="channels" id="channels" aria-label="Accepted rune channels"></div>
+      </section>
+
+      <section class="status" id="status" aria-live="polite">
+        The mechanism waits. All twenty-four rune-tokens can be cast into the bowl.
+      </section>
+    </main>
+
+    <aside class="side-panel">
+      <section class="card">
+        <h2>Warning inscription</h2>
+        <p><strong>This door was sealed against ambition.</strong></p>
+        <p>Open it only against catastrophe.</p>
+        <p>If the Anchor wakes, feed the failure into the machine in the order it unfolded.</p>
+        <p>Not to continue the work. To end it.</p>
+      </section>
+
+      <section class="card">
+        <h2>Accepted sequence</h2>
+        <div id="sequenceBox">none</div>
+      </section>
+
+      <section class="controls" aria-label="GM controls">
+        <button type="button" id="hintButton">Reveal hint</button>
+        <button type="button" id="resetButton">Reset machine</button>
+        <button type="button" id="fullscreenButton">Fullscreen</button>
+      </section>
+
+      <section class="card hint-card">
+        <h2>GM hint panel</h2>
+        <div id="hintBox">No hint revealed.</div>
+      </section>
+
+      <section class="card footer-card">
+        <h2>GM keys</h2>
+        <p>H: reveal hint<br>R: reset<br>F: fullscreen</p>
+      </section>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
