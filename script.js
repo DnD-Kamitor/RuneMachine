@@ -36,10 +36,11 @@ const meanings = {
 
 const hints = [
   "The machine does not ask for victory. It asks for the order of failure.",
-  "First came the breaking. Then came the need. The sun comes last because it never came.",
-  "The missing middle is not the sun. It is controlled flame, craft, and dangerous method.",
-  "Correct order: ᚺ Hagalaz, ᚾ Nauthiz, ᚲ Kenaz, ᛊ Sowilo."
+  "The last answer is not what the makers reached. It is what they were trying to reach.",
+  "The middle of the sequence turns danger into method. Look for the idea of a flame that is held, shaped, or contained."
 ];
+
+const noMoreHints = "The machine gives no further help. The rest must come from the clues found in the Dawnhall.";
 
 const app = document.getElementById("app");
 const ring = document.getElementById("runeRing");
@@ -169,8 +170,12 @@ function resetMachine() {
 }
 
 function revealHint() {
-  const hint = hints[Math.min(hintIndex, hints.length - 1)];
-  hintBox.textContent = hint;
+  if (hintIndex >= hints.length) {
+    hintBox.textContent = noMoreHints;
+    return;
+  }
+
+  hintBox.textContent = hints[hintIndex];
   hintIndex += 1;
 }
 
