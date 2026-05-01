@@ -63,6 +63,22 @@ const knownWrongCombinations = {
     title: "Inverted Dawn",
     text: "The sequence begins with the thing that never came. Advance the Anchor escalation by 1 round. The sickroom above worsens immediately."
   },
+  "ᚲᚾᚺᛊ": {
+    title: "Method Before Wound",
+    text: "The machine tries to solve a failure before naming it. The next successful stabilization check still causes 1d6 radiant feedback to the acting character."
+  },
+  "ᚾᚺᚲᛊ": {
+    title: "Need Before Failure",
+    text: "Panic outruns understanding. One Dawnhall Desperate immediately interferes, flees, or begs the party to stop touching the machine."
+  },
+  "ᚺᚲᚾᛊ": {
+    title: "Cold Correction",
+    text: "The machine tries to bind flame before admitting need. The next stabilization DC increases to 16."
+  },
+  "ᚺᚾᚲᚲ": {
+    title: "Sun Withheld Too Long",
+    text: "The sequence refuses to finish. A Light-Sick Echo appears near the nearest uncalibrated plinth at initiative count 20."
+  },
   "ᚲᚲᚲᚲ": {
     title: "Overfed Flame",
     text: "The bowl grows white-hot. The acting character takes 1d6 radiant damage. The next stabilization check made before the end of their next turn is DC 16 instead of DC 14."
@@ -85,7 +101,15 @@ const knownWrongCombinations = {
   },
   "ᚦᛊᚦᛊ": {
     title: "Giant Force Pointed at the Sun",
-    text: "The Flame logic overloads. The Anchor flares. Creatures within 10 ft make DC 13 Constitution save. Fail: 2d6 radiant damage. Success: half."
+    text: "The Flame logic overloads. The Anchor flares. Creatures within 10 ft make a DC 13 Constitution save. Fail: 2d6 radiant damage. Success: half."
+  },
+  "ᛗᚨᚾᛃ": {
+    title: "Half-Stabilized Chain",
+    text: "The first two plinth logics catch, but the circuit has nowhere to go. The Anchor pulse weakens for one round, then rebounds harder. Advance escalation by 1 round after the next pulse."
+  },
+  "ᛖᛈᚦᛊ": {
+    title: "Sight Into Fire",
+    text: "The Eye and Flame connect without Bell or Chain. The acting character sees the sealed alcove in a flash and takes 1d6 radiant damage."
   },
   "ᚠᚢᚦᚨ": {
     title: "Scholar's Alphabet",
@@ -152,10 +176,6 @@ let anchorActive = false;
 
 function runeName(rune) {
   return runeData.find((item) => item.rune === rune)?.name || "Unknown";
-}
-
-function sequenceToText(sequence) {
-  return sequence.map((rune) => `${rune} ${runeName(rune)}`).join("<br>");
 }
 
 function renderRing() {
@@ -237,17 +257,18 @@ function castRune(rune, name, button) {
   }
 
   const possiblePrefix = ritualSequences.some((sequence) => sequence.key.startsWith(key));
+  const knownWrong = knownWrongCombinations[key];
+
+  if (knownWrong) {
+    wrongCombination(knownWrong.title, knownWrong.text);
+    return;
+  }
 
   if (!possiblePrefix && currentCast.length >= 4) {
-    const knownWrong = knownWrongCombinations[key];
-    if (knownWrong) {
-      wrongCombination(knownWrong.title, knownWrong.text);
-    } else {
-      wrongCombination(
-        "Rejected Combination",
-        "The bowl turns once, then stops. Teeth fail to catch somewhere inside the stone. Deploy a punishment if the table needs pressure."
-      );
-    }
+    wrongCombination(
+      "Rejected Combination",
+      "The bowl turns once, then stops. Teeth fail to catch somewhere inside the stone. The machine punishes the mistake."
+    );
     return;
   }
 
@@ -261,23 +282,13 @@ function pulseButton(button) {
 }
 
 function resolveRitual(sequence) {
-  if (sequence.kind === "door-open") {
-    openDoor(false);
-  }
-
-  if (sequence.kind === "door-close") {
-    closeDoor(false);
-  }
-
-  if (sequence.kind === "anchor-stop") {
-    stopAnchor(false);
-  }
-
-  if (sequence.kind === "anchor-start") {
-    startAnchor(false);
-  }
+  if (sequence.kind === "door-open") openDoor(false);
+  if (sequence.kind === "door-close") closeDoor(false);
+  if (sequence.kind === "anchor-stop") stopAnchor(false);
+  if (sequence.kind === "anchor-start") startAnchor(false);
 
   setStatus(sequence.message, "good");
+  scheduleClearCast();
 }
 
 function wrongCombination(title, text) {
@@ -285,6 +296,15 @@ function wrongCombination(title, text) {
   void app.offsetWidth;
   app.classList.add("wrong");
   setStatus(`${title}. ${text}`, "bad");
+  scheduleClearCast();
+}
+
+function scheduleClearCast() {
+  window.setTimeout(() => {
+    currentCast = [];
+    renderChannels();
+    updateSequenceBox();
+  }, 1800);
 }
 
 function openDoor(forced = true) {
