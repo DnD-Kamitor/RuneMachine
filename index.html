@@ -11,13 +11,15 @@
     <main class="stage">
       <header class="header">
         <h1>Rune Machine</h1>
-        <p>A rune-operated emergency machine for the sealed vault door beneath the Dawnhall.</p>
+        <p>A rune-operated emergency machine for the sealed vault door and Primer Anchor beneath the Dawnhall.</p>
       </header>
 
       <section class="machine-panel" aria-label="Rune-operated vault door machine">
         <div class="door-open-text" id="doorOpenText">
           Failure named. Need witnessed. Fire bound. Dawn withheld.
         </div>
+
+        <div class="anchor-state-banner" id="anchorBanner">ANCHOR DORMANT</div>
 
         <div class="rune-ring" id="runeRing" aria-label="Twenty-four Elder Futhark rune tokens">
           <div class="bowl" aria-label="Rune bowl">
@@ -28,7 +30,7 @@
           </div>
         </div>
 
-        <div class="channels" id="channels" aria-label="Accepted rune channels"></div>
+        <div class="channels" id="channels" aria-label="Current cast sequence"></div>
       </section>
 
       <section class="status" id="status" aria-live="polite">
@@ -45,25 +47,44 @@
         <p>Not to continue the work. To end it.</p>
       </section>
 
+      <section class="card state-card">
+        <h2>Machine state</h2>
+        <p>Door: <strong id="doorState">sealed</strong></p>
+        <p>Anchor: <strong id="anchorState">dormant</strong></p>
+      </section>
+
       <section class="card">
-        <h2>Accepted sequence</h2>
+        <h2>Current cast</h2>
         <div id="sequenceBox">none</div>
       </section>
 
-      <section class="controls" aria-label="GM controls">
-        <button type="button" id="hintButton">Reveal hint</button>
+      <section class="controls" aria-label="Player-safe controls">
+        <button type="button" id="hintButton">Reveal clue</button>
+        <button type="button" id="clearButton">Clear current cast</button>
         <button type="button" id="resetButton">Reset machine</button>
         <button type="button" id="fullscreenButton">Fullscreen</button>
       </section>
 
       <section class="card hint-card">
-        <h2>GM hint panel</h2>
-        <div id="hintBox">No hint revealed.</div>
+        <h2>Clue panel</h2>
+        <div id="hintBox">No clue revealed.</div>
       </section>
+
+      <details class="gm-details">
+        <summary>GM controls</summary>
+        <section class="controls gm-controls" aria-label="GM controls">
+          <button type="button" id="forceOpenButton">Force open door</button>
+          <button type="button" id="forceCloseButton">Force close door</button>
+          <button type="button" id="startAnchorButton">Start Anchor</button>
+          <button type="button" id="stopAnchorButton">Stop Anchor</button>
+          <button type="button" id="punishmentButton">Deploy punishment</button>
+          <button type="button" id="secretButton">Reveal secret</button>
+        </section>
+      </details>
 
       <section class="card footer-card">
         <h2>Keyboard</h2>
-        <p>H: reveal hint<br>R: reset<br>F: fullscreen</p>
+        <p>H: reveal clue<br>C: clear cast<br>R: reset<br>F: fullscreen<br>O: force open door<br>L: force close door</p>
       </section>
     </aside>
   </div>
