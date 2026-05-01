@@ -26,6 +26,7 @@ const runeData = [
 ];
 
 const maxCastLength = 8;
+const visibleRitualSlots = 4;
 
 const ritualSequences = [
   {
@@ -178,6 +179,21 @@ function runeName(rune) {
   return runeData.find((item) => item.rune === rune)?.name || "Unknown";
 }
 
+function usesPairedSlots() {
+  const key = currentCast.join("");
+  return currentCast.length > visibleRitualSlots || ritualSequences.some((sequence) => sequence.key.length === 8 && sequence.key.startsWith(key) && key.length > 0);
+}
+
+function getSlotText(slotIndex) {
+  if (!usesPairedSlots()) {
+    return currentCast[slotIndex] || "·";
+  }
+
+  const first = currentCast[slotIndex * 2] || "·";
+  const second = currentCast[slotIndex * 2 + 1] || "·";
+  return `${first}${second}`;
+}
+
 function renderRing() {
   const existingButtons = ring.querySelectorAll("button.rune");
   existingButtons.forEach((button) => button.remove());
@@ -204,10 +220,11 @@ function renderRing() {
 function renderChannels() {
   channels.innerHTML = "";
 
-  for (let i = 0; i < maxCastLength; i += 1) {
+  for (let i = 0; i < visibleRitualSlots; i += 1) {
     const slot = document.createElement("div");
-    slot.className = "channel" + (currentCast[i] ? " full" : "");
-    slot.textContent = currentCast[i] || "·";
+    const text = getSlotText(i);
+    slot.className = "channel" + (text !== "·" && text !== "··" ? " full" : "");
+    slot.textContent = text;
     channels.appendChild(slot);
   }
 }
