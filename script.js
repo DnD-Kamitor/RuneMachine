@@ -35,7 +35,7 @@ const meanings = {
 };
 
 const hints = [
-  "The inscription does not ask for victory. It asks for the order of failure.",
+  "The machine does not ask for victory. It asks for the order of failure.",
   "First came the breaking. Then came the need. The sun comes last because it never came.",
   "The missing middle is not the sun. It is controlled flame, craft, and dangerous method.",
   "Correct order: ᚺ Hagalaz, ᚾ Nauthiz, ᚲ Kenaz, ᛊ Sowilo."
@@ -57,7 +57,9 @@ let hintIndex = 0;
 let opened = false;
 
 function renderRing() {
-  ring.innerHTML = "";
+  const existingButtons = ring.querySelectorAll("button.rune");
+  existingButtons.forEach((button) => button.remove());
+
   const count = runeData.length;
   const radius = "calc(min(37vw, 325px) - 2.2rem)";
 
